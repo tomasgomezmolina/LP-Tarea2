@@ -1,0 +1,6 @@
+                        if (contador < 20) {
+                            Pieces piece;
+                            piece = new Pieces(j + 5 , i + 5 , equipo);
+                            piece.drawPiece(graphics);
+                            contador ++;
+                        }
