@@ -2,9 +2,11 @@ package Game;
 
 import lp.motor.Application;
 import lp.motor.Context;
+import lp.motor.Element;
 import lp.motor.MouseHandler;
 
 import java.awt.*;
+import java.util.Random;
 import java.util.Vector;
 
 public class Main implements Context {
@@ -19,21 +21,29 @@ public class Main implements Context {
         pieces1 = new Vector<>();
         pieces2 = new Vector<>();
         board = new Board();
-        int cont = 0;
-        int cont2 = 20;
+
+        Element.Type elemento;
+        Random generator = new Random();
+        int t = generator.nextInt(50);
+        int f = generator.nextInt(100);
+
         for (int i = 0; i <= 200; i = i + 50) {
             for (int j = 0; j <= 3; j++) {
-                piece1 = new Piece(55 + 2 * i + (1 + j) % 2 * 50, 55 + 50 * j, 1, j + cont);
+                if (( j + f )%3 == 0) elemento = Element.Type.FIRE;
+                else if ((  i + t)%3 == 1) elemento = Element.Type.WATER;
+                else   elemento = Element.Type.LEAF;
+                piece1 = new Piece(55 + 2 * i + (1 + j) % 2 * 50, 55 + 50 * j, 1, elemento);
                 pieces1.add(piece1);
             }
-            cont += 4;
         }
         for (int i = 0; i <= 200; i = i + 50) {
             for (int j = 0; j <= 3; j++) {
-                piece2 = new Piece(55 + 2 * i + (1 + j) % 2 * 50, 355 + 50 * j, 2, j + cont2);
+                if ((i + f )%3 == 0) elemento = Element.Type.FIRE;
+                else if ((t + j )%3 == 1) elemento = Element.Type.WATER;
+                else  elemento = Element.Type.LEAF;
+                piece2 = new Piece(55 + 2 * i + (1 + j) % 2 * 50, 355 + 50 * j, 2, elemento);
                 pieces2.add(piece2);
             }
-            cont2 += 4;
         }
     }
 

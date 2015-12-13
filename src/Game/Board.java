@@ -7,7 +7,6 @@ import java.util.Vector;
 
 public class Board {
 
-    int identificador;
     int clics = 0;
     int turno = 0;
     Piece found;
@@ -53,6 +52,7 @@ public class Board {
     }
 
     public void movePiece(MouseHandler mouseHandler, Point point, Vector<Piece> pieces1, Vector<Piece> pieces2) {
+
         if (turno % 2 == 0) { // turno equipo 1
             if (clics % 2 == 0) {
                 for (Piece pieza : pieces1) { // ((point.x/y / 50) * 50 + 5) -> hace que el punto se aproxime a las coordenadas de las piezas
@@ -68,19 +68,26 @@ public class Board {
                     if (aprox.x < 550 && 50 < aprox.x && aprox.y < 550 && 50 < aprox.y) { //restriccion para no salir del tablero
                         if ( (((aprox.x == (found.getX() - 50)) || aprox.x == (found.getX() + 50))
                                 && (((point.y / 50) * 50 + 5) == (found.getY() + 50)) )
-                                || (found.preComer(point, found, pieces1, pieces2, turno))) { // restriccion para avanzar en diagonal y poder "comer"
+                                || (found.preComer(point, found, pieces1, pieces2, turno))
+                                || (found.getesDama())) { // restriccion para avanzar en diagonal y poder "comer"
                             if ((found.preComer(point, found, pieces1, pieces2, turno))) {
-                                found.comer(found.piezaAEliminar(found, aprox, pieces1, pieces2, turno), pieces1, pieces2);
-                                found.setX(aprox.x);
-                                found.setY(aprox.y);
-                                clics++;
-                                turno++;
+                                if (found.quienGana(found, found.piezaAEliminar(found, aprox, pieces1, pieces2, turno))) {
+                                    found.comer(found.piezaAEliminar(found, aprox, pieces1, pieces2, turno), pieces1, pieces2);
+                                    found.setX(aprox.x);
+                                    found.setY(aprox.y);
+                                    clics++;
+                                    turno++;
+                                    if (found.getY() == 505) found.hacerDama();
+                                }
+                                else found.comer(found, pieces1, pieces2);
                             }
                             else {
                                 found.setX(aprox.x);
                                 found.setY(aprox.y);
                                 clics++;
                                 turno++;
+                                System.out.println(found.getY());
+                                if (found.getY() == 505 ) found.hacerDama();
                             }
                         }
                     }
@@ -99,25 +106,33 @@ public class Board {
                 if (found.sonIguales(point, pieces1, pieces2)) {
                     if ((aprox.x < 550 && 50 < aprox.x) && (aprox.y < 550 && 50 < aprox.y * 50 + 5)) {
                         if (((aprox.x  == (found.getX() - 50)) || aprox.x == (found.getX() + 50))
-                                && aprox.y == (found.getY() - 50) || (found.preComer(point, found, pieces1, pieces2, turno))) {
+                                && aprox.y == (found.getY() - 50)
+                                || (found.preComer(point, found, pieces1, pieces2, turno))
+                                || (found.getesDama())) {
                             if ((found.preComer(point, found, pieces1, pieces2, turno))) {
-                                found.comer(found.piezaAEliminar(found, aprox, pieces1, pieces2, turno), pieces1, pieces2);
-                                found.setX(aprox.x);
-                                found.setY(aprox.y);
-                                clics++;
-                                turno++;
+                                if (found.quienGana(found, found.piezaAEliminar(found, aprox, pieces1, pieces2, turno))) {
+                                    found.comer(found.piezaAEliminar(found, aprox, pieces1, pieces2, turno), pieces1, pieces2);
+                                    found.setX(aprox.x);
+                                    found.setY(aprox.y);
+                                    clics++;
+                                    turno++;
+                                    if (found.getY() == 55) found.hacerDama();
+                                }
+                                else found.comer(found, pieces1, pieces2);
                             }
                             else {
                                 found.setX(aprox.x);
                                 found.setY(aprox.y);
                                 clics++;
                                 turno++;
+                                if (found.getY() == 55 ) found.hacerDama();
                             }
                         }
                     }
                 }
             }
         }
+        //if (turno == 5) found.crearPowerUPs(pieces1, pieces2, found);
     }
 
 
