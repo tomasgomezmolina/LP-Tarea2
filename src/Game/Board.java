@@ -2,6 +2,7 @@ package Game;
 import lp.motor.MouseHandler;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Vector;
 
 
 public class Board {
@@ -50,7 +51,7 @@ public class Board {
         }
     }
 
-    public void movePiece(MouseHandler mouseHandler, Point point, ArrayList<Piece> pieces1, ArrayList<Piece> pieces2) {
+    public void movePiece(MouseHandler mouseHandler, Point point, Vector<Piece> pieces1, Vector<Piece> pieces2) {
         if (turno % 2 == 0) { // turno equipo 1
             if (clics % 2 == 0) {
                 for (Piece pieza : pieces1) { // ((point.x/y / 50) * 50 + 5) -> hace que el punto se aproxime a las coordenadas de las piezas
@@ -61,15 +62,27 @@ public class Board {
                     }
                 }
             } else if (mouseHandler.isButtonJustPressed()) {
+                //System.out.println(found.aproxPunto(point).x);
+                //System.out.println((point.x / 50) * 50 + 5);
+                //found.aproxPunto(point);
                 if (found.sonIguales(point, pieces1, pieces2)) { // para no ponerse sobre otra ficha
                     if (((point.x / 50) * 50 + 5) < 550 && 50 < ((point.x / 50) * 50 + 5) && ((point.y / 50) * 50 + 5) < 550 && 50 < ((point.y / 50) * 50 + 5)) { //restriccion para no salir del tablero
                         if ( (((((point.x / 50) * 50 + 5) == (found.getX() - 50)) || ((point.x / 50) * 50 + 5) == (found.getX() + 50))
                                 && (((point.y / 50) * 50 + 5) == (found.getY() + 50)) )
                                 || (found.preComer(point, found, pieces1, pieces2, turno))) { // restriccion para avanzar en diagonal y poder "comer"
-                            found.setX((point.x / 50) * 50 + 5);
-                            found.setY((point.y / 50) * 50 + 5);
-                            clics++;
-                            turno++;
+                            if ((found.preComer(point, found, pieces1, pieces2, turno))) {
+                                found.comer(found.piezaAEliminar(found,pieces1, pieces2, turno), pieces1, pieces2);
+                                found.setX((point.x / 50) * 50 + 5);
+                                found.setY((point.y / 50) * 50 + 5);
+                                clics++;
+                                turno++;
+                            }
+                            else {
+                                found.setX((point.x / 50) * 50 + 5);
+                                found.setY((point.y / 50) * 50 + 5);
+                                clics++;
+                                turno++;
+                            }
                         }
                     }
                 }
@@ -88,10 +101,19 @@ public class Board {
                         if ( (((((point.x / 50) * 50 + 5) == (found.getX() - 50)) || ((point.x / 50) * 50 + 5) == (found.getX() + 50))
                                 && (((point.y / 50) * 50 + 5) == (found.getY() - 50)))
                                 || (found.preComer(point, found, pieces1, pieces2, turno))) {
-                            found.setX(((point.x / 50) * 50 + 5));
-                            found.setY((point.y / 50) * 50 + 5);
-                            clics++;
-                            turno++;
+                            if ((found.preComer(point, found, pieces1, pieces2, turno))) {
+                                found.comer(found.piezaAEliminar(found,pieces1, pieces2, turno), pieces1, pieces2);
+                                found.setX((point.x / 50) * 50 + 5);
+                                found.setY((point.y / 50) * 50 + 5);
+                                clics++;
+                                turno++;
+                            }
+                            else {
+                                found.setX((point.x / 50) * 50 + 5);
+                                found.setY((point.y / 50) * 50 + 5);
+                                clics++;
+                                turno++;
+                            }
                         }
                     }
                 }

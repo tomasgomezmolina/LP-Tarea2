@@ -5,20 +5,19 @@ import lp.motor.Context;
 import lp.motor.MouseHandler;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.Vector;
 
 public class Main implements Context {
     Board board;
     Piece piece1;
     Piece piece2;
-    ArrayList<Piece> pieces1;
-    ArrayList<Piece> pieces2;
-    /*Vector<Piece>*/
+    Vector<Piece> pieces1;
+    Vector<Piece> pieces2;
 
 
     public Main() {
-        pieces1 = new ArrayList<>();
-        pieces2 = new ArrayList<>();
+        pieces1 = new Vector<>();
+        pieces2 = new Vector<>();
         board = new Board();
         int cont = 0;
         int cont2 = 20;
