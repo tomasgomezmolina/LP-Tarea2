@@ -11,6 +11,7 @@ public class Board {
     int clics = 0;
     int turno = 0;
     Piece found;
+    Point aprox;
 
     private static ArrayList<Point> bloques = new ArrayList<>();
 
@@ -62,24 +63,22 @@ public class Board {
                     }
                 }
             } else if (mouseHandler.isButtonJustPressed()) {
-                //System.out.println(found.aproxPunto(point).x);
-                //System.out.println((point.x / 50) * 50 + 5);
-                //found.aproxPunto(point);
+                aprox = found.aproxPunto(point);
                 if (found.sonIguales(point, pieces1, pieces2)) { // para no ponerse sobre otra ficha
-                    if (((point.x / 50) * 50 + 5) < 550 && 50 < ((point.x / 50) * 50 + 5) && ((point.y / 50) * 50 + 5) < 550 && 50 < ((point.y / 50) * 50 + 5)) { //restriccion para no salir del tablero
-                        if ( (((((point.x / 50) * 50 + 5) == (found.getX() - 50)) || ((point.x / 50) * 50 + 5) == (found.getX() + 50))
+                    if (aprox.x < 550 && 50 < aprox.x && aprox.y < 550 && 50 < aprox.y) { //restriccion para no salir del tablero
+                        if ( (((aprox.x == (found.getX() - 50)) || aprox.x == (found.getX() + 50))
                                 && (((point.y / 50) * 50 + 5) == (found.getY() + 50)) )
                                 || (found.preComer(point, found, pieces1, pieces2, turno))) { // restriccion para avanzar en diagonal y poder "comer"
                             if ((found.preComer(point, found, pieces1, pieces2, turno))) {
-                                found.comer(found.piezaAEliminar(found,pieces1, pieces2, turno), pieces1, pieces2);
-                                found.setX((point.x / 50) * 50 + 5);
-                                found.setY((point.y / 50) * 50 + 5);
+                                found.comer(found.piezaAEliminar(found, aprox, pieces1, pieces2, turno), pieces1, pieces2);
+                                found.setX(aprox.x);
+                                found.setY(aprox.y);
                                 clics++;
                                 turno++;
                             }
                             else {
-                                found.setX((point.x / 50) * 50 + 5);
-                                found.setY((point.y / 50) * 50 + 5);
+                                found.setX(aprox.x);
+                                found.setY(aprox.y);
                                 clics++;
                                 turno++;
                             }
@@ -96,21 +95,21 @@ public class Board {
                     }
                 }
             } else if (mouseHandler.isButtonJustPressed()) {
+                aprox = found.aproxPunto(point);
                 if (found.sonIguales(point, pieces1, pieces2)) {
-                    if (((point.x / 50) * 50 + 5) < 550 && 50 < ((point.x / 50) * 50 + 5) && ((point.y / 50) * 50 + 5) < 550 && 50 < ((point.y / 50) * 50 + 5)) {
-                        if ( (((((point.x / 50) * 50 + 5) == (found.getX() - 50)) || ((point.x / 50) * 50 + 5) == (found.getX() + 50))
-                                && (((point.y / 50) * 50 + 5) == (found.getY() - 50)))
-                                || (found.preComer(point, found, pieces1, pieces2, turno))) {
+                    if ((aprox.x < 550 && 50 < aprox.x) && (aprox.y < 550 && 50 < aprox.y * 50 + 5)) {
+                        if (((aprox.x  == (found.getX() - 50)) || aprox.x == (found.getX() + 50))
+                                && aprox.y == (found.getY() - 50) || (found.preComer(point, found, pieces1, pieces2, turno))) {
                             if ((found.preComer(point, found, pieces1, pieces2, turno))) {
-                                found.comer(found.piezaAEliminar(found,pieces1, pieces2, turno), pieces1, pieces2);
-                                found.setX((point.x / 50) * 50 + 5);
-                                found.setY((point.y / 50) * 50 + 5);
+                                found.comer(found.piezaAEliminar(found, aprox, pieces1, pieces2, turno), pieces1, pieces2);
+                                found.setX(aprox.x);
+                                found.setY(aprox.y);
                                 clics++;
                                 turno++;
                             }
                             else {
-                                found.setX((point.x / 50) * 50 + 5);
-                                found.setY((point.y / 50) * 50 + 5);
+                                found.setX(aprox.x);
+                                found.setY(aprox.y);
                                 clics++;
                                 turno++;
                             }
