@@ -15,12 +15,18 @@ public class Main implements Context {
     Piece piece2;
     Vector<Piece> pieces1;
     Vector<Piece> pieces2;
+    GetRandom random;
+
 
 
     public Main() {
         pieces1 = new Vector<>();
         pieces2 = new Vector<>();
         board = new Board();
+        random = new GetRandom();
+        random.powerup1 = random.randomValue();
+        random.powerup2 = random.randomValue();
+
 
         Element.Type elemento;
         Random generator = new Random();
@@ -50,7 +56,6 @@ public class Main implements Context {
     @Override
     public void update(MouseHandler mouseHandler) {
         Point point = mouseHandler.getMousePosition();
-
         board.movePiece(mouseHandler, point, pieces1, pieces2);
 
         }
@@ -63,6 +68,7 @@ public class Main implements Context {
 
         // por ejemplo dibujar un círculo verde:
         board.drawBoard(graphics);
+        board.drawPowerUp(graphics,random.powerup1,random.powerup2);
 
         for (Piece pieza : pieces1) {
             pieza.drawPiece(graphics);

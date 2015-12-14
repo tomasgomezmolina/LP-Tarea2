@@ -5,12 +5,16 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 
-public class Board {
+public class Board  {
 
     int clics = 0;
     int turno = 0;
+    boolean verificacion1 = false;
+    boolean verificacion2 = false;
+    boolean verificacion3 = false;
     Piece found;
     Point aprox;
+
 
     private static ArrayList<Point> bloques = new ArrayList<>();
 
@@ -134,6 +138,75 @@ public class Board {
         }
         //if (turno == 5) found.crearPowerUPs(pieces1, pieces2, found);
     }
+    public void drawPowerUp(Graphics graphics , String powerup1 , String powerup2){
 
+        switch (powerup1){
+            case "uno":
+                if (turno == 4) {
+                    verificacion1 = true;
+                }
+                break;
+            case "dos":
+                if (turno == 6) {
+                    verificacion1 = true;
+                }
+                break;
+            case "tres":
+                if (turno == 8) {
+                    verificacion1 = true;
+                }
+                break;
+            case "cuatro":
+                if (turno == 10) {
+                    verificacion1 = true;
+                }
+                break;
+            case "cinco":
+                if (turno == 12) {
+                    verificacion1 = true;
+                }
+                break;
+
+        }
+        switch (powerup2){
+            case "uno":
+                if (turno == 3) {
+                    verificacion2 = true;
+                }
+                break;
+            case "dos":
+                if (turno == 5) {
+                    verificacion2 = true;
+                }
+                break;
+            case "tres":
+                if (turno == 7) {
+                    verificacion2 = true;
+                }
+                break;
+            case "cuatro":
+                if (turno == 9) {
+                    verificacion2 = true;
+                }
+                break;
+            case "cinco":
+                if (turno == 11) {
+                    verificacion2 = true;
+                }
+                break;
+
+        }
+
+        if (!verificacion3) {
+            if (verificacion1) {
+                graphics.setColor(Color.yellow);
+                graphics.fillRect(200, 300, 50, 50);
+            }
+            if (verificacion2) {
+                graphics.setColor(Color.orange);
+                graphics.fillRect(300, 250, 50, 50);
+            }
+        }
+    }
 
 }
